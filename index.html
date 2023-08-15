@@ -3,10 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>ASCII Cam</title>
+
+    <link rel="stylesheet" href="./Styles/main.css" />
+    <script src="./Scripts/main.js" defer></script>
   </head>
 
   <body>
     <canvas id="main-canvas"></canvas>
+    <div class="btn-cont">
+      <a href="" id="download-btn" download="image.png">Get Selfy</a>
+      <button id="invert-btn">Invert</button>
+      <select name="color-select" id="color-select">
+        <option value="none" selected>None</option>
+        <option value="colorfull">Colorfull</option>
+        <option value="grayscale">Grayscale</option>
+      </select>
+
+      <span>Scale</span>
+      <input
+        value="80"
+        type="range"
+        name="scale-range"
+        id="scale-range"
+        min="30"
+        max="130"
+        step="10"
+      />
+    </div>
   </body>
 </html>
