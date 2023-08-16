@@ -3,9 +3,12 @@ const canvas = document.querySelector("#main-canvas"),
   invertBtn = document.querySelector("#invert-btn"),
   colorSelect = document.querySelector("#color-select"),
   downloadBtn = document.querySelector("#download-btn"),
-  scaleRange = document.querySelector("#scale-range");
+  scaleRange = document.querySelector("#scale-range"),
+  picCanvas = document.createElement("canvas");
 
+// Define Main Objects
 const ctx = canvas.getContext("2d", { willReadFrequently: true }),
+  picCtx = picCanvas.getContext("2d"),
   frame = {
     x: undefined,
     y: undefined,
@@ -21,6 +24,7 @@ const ctx = canvas.getContext("2d", { willReadFrequently: true }),
     boxes: [],
   };
 
+// Define Source Objects
 const srcObj = {
     srcEl: document.createElement("video"),
   },
@@ -34,11 +38,11 @@ const srcObj = {
   );
 
 let charObj = {
-  charList: [" _.,-=+:;cba!?0123456789$W#@Ñ", "    ....:::--=+*#%@"],
+  charList: [" .:-=+*#%@"],
   active: " _.,-=+:;cba!?0123456789$W#@Ñ",
 };
 charDencity = "   ..:-=+*#%@";
-// charDencity = " _.,-=+:;cba!?0123456789$W#@Ñ";
+// " _.,-=+:;cba!?0123456789$W#@Ñ";
 // " `.-':_,^=;><+!rc*/z?sLTv)J7(|Fi{C}fI31tlu[neoZ5Yxjya]2ESwqkP6h9d4VpOGbUAKXHm8RD#$Bg0MNWQ%&@"
 // "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:," + '"' + "^`'. "
 
@@ -161,10 +165,14 @@ const initGridBoxes = () => {
 };
 
 const resizer = () => {
-  canvas.height = innerHeight;
   canvas.width = innerWidth;
+  canvas.height = innerHeight;
 
   initFrame();
+
+  picCanvas.width = frame.width;
+  picCanvas.height = frame.height;
+
   initGridObj();
 
   gridObj.boxes.forEach((box) => {
@@ -184,16 +192,15 @@ const updateCanvas = () => {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  ctx.beginPath();
+  ctx.fillStyle = "rgb(15, 15, 15)";
+
+  ctx.fillRect(frame.x, frame.y, frame.width, frame.height);
+  ctx.closePath();
+
   gridObj.boxes.forEach((box) => {
     box.draw(ctx);
   });
-
-  // ctx.beginPath();
-  // ctx.strokeStyle = "red";
-
-  // ctx.rect(frame.x, frame.y, frame.width, frame.height);
-  // ctx.stroke();
-  // ctx.closePath();
 
   requestAnimationFrame(updateCanvas);
 };
@@ -219,7 +226,17 @@ scaleRange.oninput = () => {
 
 onresize = resizer;
 downloadBtn.onclick = () => {
-  setTimeout;
-  const imageLink = canvas.toDataURL("image/png", 1.0);
+  picCtx.drawImage(
+    canvas,
+    frame.x,
+    frame.y,
+    frame.width,
+    frame.height,
+    0,
+    0,
+    frame.width,
+    frame.height
+  );
+  const imageLink = picCanvas.toDataURL("image/png", 1.0);
   downloadBtn.href = imageLink;
 };
