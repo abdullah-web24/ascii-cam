@@ -97,6 +97,10 @@ const initFrame = () => {
   frame.height = srcObj.height * frame.ratio;
   frame.x = canvas.width / 2 - frame.width / 2;
   frame.y = canvas.height / 2 - frame.height / 2;
+
+  // Pic canvas
+  picCanvas.width = frame.width;
+  picCanvas.height = frame.height;
 };
 
 const initGridBoxPos = (thebox) => {
@@ -138,7 +142,7 @@ class GridBox {
     ctx.fillStyle = this.color;
     // ctx.strokeStyle = this.color;
 
-    ctx.font = `500 ${gridObj.boxSize * 1.5}px "Roboto-Mono"`;
+    ctx.font = `500 ${gridObj.boxSize * 1.3}px "Roboto-Mono"`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
@@ -169,10 +173,6 @@ const resizer = () => {
   canvas.height = innerHeight;
 
   initFrame();
-
-  picCanvas.width = frame.width;
-  picCanvas.height = frame.height;
-
   initGridObj();
 
   gridObj.boxes.forEach((box) => {
