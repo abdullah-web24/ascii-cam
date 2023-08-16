@@ -33,11 +33,18 @@ const srcObj = {
     }
   );
 
-let charDencity = " _.,-=+:;cba!?0123456789$W#@Ñ";
+let charObj = {
+  charList: [" _.,-=+:;cba!?0123456789$W#@Ñ", "    ....:::--=+*#%@"],
+  active: " _.,-=+:;cba!?0123456789$W#@Ñ",
+};
+charDencity = "   ..:-=+*#%@";
+// charDencity = " _.,-=+:;cba!?0123456789$W#@Ñ";
 // " `.-':_,^=;><+!rc*/z?sLTv)J7(|Fi{C}fI31tlu[neoZ5Yxjya]2ESwqkP6h9d4VpOGbUAKXHm8RD#$Bg0MNWQ%&@"
 // "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:," + '"' + "^`'. "
 
 // srcObj.srcEl.src = "./bashar.mp4";
+// srcObj.srcEl.muted = true;
+// srcObj.srcEl.play();
 
 const readyCamera = async () => {
   try {
@@ -127,7 +134,7 @@ class GridBox {
     ctx.fillStyle = this.color;
     // ctx.strokeStyle = this.color;
 
-    ctx.font = `500 ${gridObj.boxSize}px "Roboto-Mono"`;
+    ctx.font = `500 ${gridObj.boxSize * 1.5}px "Roboto-Mono"`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
