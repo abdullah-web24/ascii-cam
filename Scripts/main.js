@@ -32,7 +32,7 @@ const srcObj = {
     srcEl: document.createElement("video"),
     width: undefined,
     height: undefined,
-    cameraMode: "environment",
+    cameraMode: "user",
     src: undefined,
 
     handleSize() {
@@ -75,11 +75,12 @@ charObj.adjBrightness(colorRange.value);
 
 const getCamera = async () => {
   try {
-    // if (srcObj.src) {
-    //   srcObj.src.getTracks().forEach(function (track) {
-    //     track.stop();
-    //   });
-    // }
+    if (srcObj.src) {
+      srcObj.src.getTracks().forEach(function (track) {
+        track.stop();
+      });
+    }
+
     srcObj.src = await navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: srcObj.cameraMode,
@@ -207,19 +208,23 @@ const resizer = () => {
 };
 resizer();
 
+const flipCanvas = () => {
+  ctx.translate(canvas.width, 0);
+  ctx.scale(-1, 1);
+};
+
 const updateCanvas = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  ctx.translate(canvas.width, 0);
-  ctx.scale(-1, 1);
+  if (srcObj.cameraMode === "user") flipCanvas();
+
   ctx.drawImage(srcObj.srcEl, frame.x, frame.y, frame.width, frame.height);
 
   gridObj.boxes.forEach((box) => {
     box.getData(ctx);
   });
 
-  ctx.translate(canvas.width, 0);
-  ctx.scale(-1, 1);
+  if (srcObj.cameraMode === "user") flipCanvas();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   ctx.beginPath();
