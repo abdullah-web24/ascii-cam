@@ -75,11 +75,19 @@ charObj.adjBrightness(colorRange.value);
 
 const getCamera = async () => {
   try {
+    console.log("hi");
+    if (srcObj.src) {
+      srcObj.src.getTracks().forEach(function (track) {
+        track.stop();
+      });
+    }
     srcObj.src = await navigator.mediaDevices.getUserMedia({
       video: {
         facingMode: srcObj.cameraMode,
       },
     });
+
+    console.log(srcObj.src);
 
     srcObj.srcEl.srcObject = srcObj.src;
     srcObj.srcEl.play();
