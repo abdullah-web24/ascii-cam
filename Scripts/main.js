@@ -3,7 +3,10 @@ const canvas = document.querySelector("#main-canvas"),
   invertBtn = document.querySelector("#invert-btn"),
   colorSelect = document.querySelector("#color-select"),
   downloadBtn = document.querySelector("#download-btn"),
+  coppyBtn = document.querySelector("#coppy-btn"),
   scaleRange = document.querySelector("#scale-range"),
+  colorRange = document.querySelector("#color-range"),
+  modeBtn = document.querySelector("#mode-btn"),
   picCanvas = document.createElement("canvas");
 
 // Define Main Objects
@@ -27,52 +30,72 @@ const ctx = canvas.getContext("2d", { willReadFrequently: true }),
 // Define Source Objects
 const srcObj = {
     srcEl: document.createElement("video"),
+    width: undefined,
+    height: undefined,
+    cameraMode: "user",
+    src: undefined,
+
+    handleSize() {
+      this.height = this.srcEl.videoHeight;
+      this.width = this.srcEl.videoWidth;
+    },
   },
-  myFont = new FontFace(
-    "Roboto-Mono",
-    "url(https://fonts.gstatic.com/s/robotomono/v22/L0xuDF4xlVMF-BfR8bXMIhJHg45mwgGEFl0_7Pq_ROW4.woff2) format('woff2')",
-    {
-      weight: 500,
-      display: "swap",
-    }
-  );
+  charObj = {
+    mainChars: " .:-=+*#%@",
+    activeChars: "",
 
-let charObj = {
-  charList: [" .:-=+*#%@"],
-  active: " _.,-=+:;cba!?0123456789$W#@Ñ",
-};
-charDencity = "   ..:-=+*#%@";
-// " _.,-=+:;cba!?0123456789$W#@Ñ";
-// " `.-':_,^=;><+!rc*/z?sLTv)J7(|Fi{C}fI31tlu[neoZ5Yxjya]2ESwqkP6h9d4VpOGbUAKXHm8RD#$Bg0MNWQ%&@"
-// "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:," + '"' + "^`'. "
+    init() {
+      const val = this.mainChars.length - 1;
+      colorRange.min = -val;
+      colorRange.max = val;
+    },
+    adjBrightness(initVal) {
+      const val = Math.abs(initVal);
+      let charArr = this.mainChars.split("");
+      if (initVal < 0) charArr = charArr.reverse();
 
-// srcObj.srcEl.src = "./bashar.mp4";
-// srcObj.srcEl.muted = true;
-// srcObj.srcEl.play();
+      for (i = 0; i < val; i++) {
+        const char = charArr[i];
+        for (j = val - i; j > 0; j--) {
+          charArr[i] += char;
+        }
+      }
 
-const readyCamera = async () => {
+      if (initVal < 0) charArr = charArr.reverse();
+      this.activeChars = charArr.join("");
+    },
+  },
+  colorObj = {
+    background: "rgb(15, 15, 15)",
+    main: "rgb(253, 253, 253)",
+  };
+
+charObj.init();
+charObj.adjBrightness(colorRange.value);
+
+const getCamera = async () => {
   try {
-    const media = await navigator.mediaDevices.getUserMedia({
-      video: true,
+    srcObj.src = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: srcObj.cameraMode,
+      },
     });
 
-    srcObj.srcEl.srcObject = media;
+    srcObj.srcEl.srcObject = srcObj.src;
     srcObj.srcEl.play();
   } catch (err) {
     console.log("Camera err", err);
   }
 };
-readyCamera();
+getCamera();
 
-const readyFont = async () => {
+const copyTxt = async (txt) => {
   try {
-    await myFont.load();
-    document.fonts.add(myFont);
+    await navigator.clipboard.writeText(txt);
   } catch (err) {
-    console.log("Font err", err);
+    console.log("Clipboard err", err);
   }
 };
-readyFont();
 
 const initGridObj = () => {
   gridObj.boxSize = Math.max(frame.width, frame.height) / gridObj.maxBoxNum;
@@ -86,8 +109,7 @@ const initGridObj = () => {
 };
 
 const initFrame = () => {
-  srcObj.width = srcObj.srcEl.videoWidth;
-  srcObj.height = srcObj.srcEl.videoHeight;
+  srcObj.handleSize();
 
   frame.ratio = Math.min(
     canvas.width / srcObj.width,
@@ -132,27 +154,26 @@ class GridBox {
     } else if (colorSelect.value === "grayscale") {
       this.color = `rgb(${grayValue},${grayValue},${grayValue})`;
     } else {
-      this.color = `rgb(253, 253, 253)`;
+      this.color = colorObj.main;
     }
 
-    this.charIndx = Math.floor((grayValue / 255) * (charDencity.length - 1));
+    const charIndx = Math.floor(
+      (grayValue / 255) * (charObj.activeChars.length - 1)
+    );
+    this.char = charObj.activeChars[charIndx];
   }
   draw(ctx) {
     ctx.beginPath();
     ctx.fillStyle = this.color;
     // ctx.strokeStyle = this.color;
 
-    ctx.font = `500 ${gridObj.boxSize * 1.3}px "Roboto-Mono"`;
+    ctx.font = `500 ${gridObj.boxSize * 1.3}px "Roboto Mono"`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
-    ctx.fillText(
-      charDencity[this.charIndx],
-      this.x + this.width / 2,
-      this.y + this.height / 2
-    );
+    ctx.fillText(this.char, this.x + this.width / 2, this.y + this.height / 2);
 
-    // ctx.rect(this.x, this.y, this.width, this.height);
+    // ctx.fillRect(this.x, this.y, this.width, this.height);
     // ctx.stroke();
     ctx.closePath();
   }
@@ -184,18 +205,21 @@ resizer();
 const updateCanvas = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  ctx.translate(canvas.width, 0);
+  ctx.scale(-1, 1);
   ctx.drawImage(srcObj.srcEl, frame.x, frame.y, frame.width, frame.height);
 
   gridObj.boxes.forEach((box) => {
     box.getData(ctx);
   });
 
+  ctx.translate(canvas.width, 0);
+  ctx.scale(-1, 1);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   ctx.beginPath();
-  ctx.fillStyle = "rgb(15, 15, 15)";
-
-  ctx.fillRect(frame.x, frame.y, frame.width, frame.height);
+  ctx.fillStyle = colorObj.background;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.closePath();
 
   gridObj.boxes.forEach((box) => {
@@ -214,7 +238,12 @@ srcObj.srcEl.onloadeddata = () => {
 
 // Dom Interactions
 invertBtn.onclick = () => {
-  charDencity = charDencity.split("").reverse().join("");
+  charObj.mainChars = charObj.mainChars.split("").reverse().join("");
+  charObj.adjBrightness(colorRange.value);
+
+  const color = colorObj.main;
+  colorObj.main = colorObj.background;
+  colorObj.background = color;
 };
 
 scaleRange.oninput = () => {
@@ -225,6 +254,7 @@ scaleRange.oninput = () => {
 };
 
 onresize = resizer;
+
 downloadBtn.onclick = () => {
   picCtx.drawImage(
     canvas,
@@ -239,4 +269,28 @@ downloadBtn.onclick = () => {
   );
   const imageLink = picCanvas.toDataURL("image/png", 1.0);
   downloadBtn.href = imageLink;
+};
+
+coppyBtn.onclick = () => {
+  let theText = ``;
+
+  gridObj.boxes.forEach((box) => {
+    theText += box.char;
+
+    if (box.colIndx === gridObj.cols - 1) {
+      theText += "\n";
+    }
+  });
+
+  copyTxt(theText);
+};
+
+colorRange.oninput = () => {
+  charObj.adjBrightness(colorRange.value);
+};
+
+modeBtn.onclick = () => {
+  srcObj.cameraMode = srcObj.cameraMode === "user" ? "environment" : "user";
+
+  getCamera();
 };

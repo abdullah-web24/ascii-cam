@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ASCII Cam</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="./Styles/main.css" />
     <script src="./Scripts/main.js" defer></script>
   </head>
@@ -13,7 +20,9 @@
     <canvas id="main-canvas"></canvas>
     <div class="btn-cont">
       <a href="" id="download-btn" download="image.png">Get Selfy</a>
+      <button id="coppy-btn">Get Coppy</button>
       <button id="invert-btn">Invert</button>
+      <button id="mode-btn">Mode</button>
       <select name="color-select" id="color-select">
         <option value="none" selected>None</option>
         <option value="colorfull">Colorfull</option>
@@ -22,13 +31,20 @@
 
       <span>Scale</span>
       <input
-        value="80"
+        value="60"
         type="range"
         name="scale-range"
         id="scale-range"
-        min="30"
-        max="130"
+        min="20"
+        max="100"
         step="10"
+      />
+      <input
+        value="2"
+        type="range"
+        name="color-range"
+        id="color-range"
+        step="1"
       />
     </div>
   </body>
