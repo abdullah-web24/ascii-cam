@@ -32,7 +32,7 @@ const srcObj = {
     srcEl: document.createElement("video"),
     width: undefined,
     height: undefined,
-    cameraMode: "user",
+    cameraMode: "environment",
     src: undefined,
 
     handleSize() {
