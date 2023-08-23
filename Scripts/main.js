@@ -34,11 +34,6 @@ const srcObj = {
     height: undefined,
     cameraMode: "user",
     src: undefined,
-
-    handleSize() {
-      this.height = this.srcEl.videoHeight;
-      this.width = this.srcEl.videoWidth;
-    },
   },
   charObj = {
     mainChars: " .:-=+*#%@",
@@ -103,19 +98,14 @@ const copyTxt = async (txt) => {
   }
 };
 
-const initGridObj = () => {
-  gridObj.boxSize = Math.max(frame.width, frame.height) / gridObj.maxBoxNum;
-  gridObj.rows = Math.floor(frame.height / gridObj.boxSize);
-  gridObj.cols = Math.floor(frame.width / gridObj.boxSize);
-
-  gridObj.extraHeight =
-    (frame.height - gridObj.rows * gridObj.boxSize) / gridObj.rows;
-  gridObj.extraWidth =
-    (frame.width - gridObj.cols * gridObj.boxSize) / gridObj.cols;
+const flipCanvas = () => {
+  ctx.translate(canvas.width, 0);
+  ctx.scale(-1, 1);
 };
 
 const initFrame = () => {
-  srcObj.handleSize();
+  srcObj.height = srcObj.srcEl.videoHeight;
+  srcObj.width = srcObj.srcEl.videoWidth;
 
   frame.ratio = Math.min(
     canvas.width / srcObj.width,
@@ -129,6 +119,17 @@ const initFrame = () => {
   // Pic canvas
   picCanvas.width = frame.width;
   picCanvas.height = frame.height;
+};
+
+const initGridObj = () => {
+  gridObj.boxSize = Math.max(frame.width, frame.height) / gridObj.maxBoxNum;
+  gridObj.rows = Math.floor(frame.height / gridObj.boxSize);
+  gridObj.cols = Math.floor(frame.width / gridObj.boxSize);
+
+  gridObj.extraHeight =
+    (frame.height - gridObj.rows * gridObj.boxSize) / gridObj.rows;
+  gridObj.extraWidth =
+    (frame.width - gridObj.cols * gridObj.boxSize) / gridObj.cols;
 };
 
 const initGridBoxPos = (thebox) => {
@@ -171,16 +172,14 @@ class GridBox {
   draw(ctx) {
     ctx.beginPath();
     ctx.fillStyle = this.color;
-    // ctx.strokeStyle = this.color;
+    ctx.strokeStyle = this.color;
 
     ctx.font = `500 ${gridObj.boxSize * 1.3}px "Roboto Mono"`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
     ctx.fillText(this.char, this.x + this.width / 2, this.y + this.height / 2);
-
-    // ctx.fillRect(this.x, this.y, this.width, this.height);
-    // ctx.stroke();
+    ctx.stroke();
     ctx.closePath();
   }
 }
@@ -207,11 +206,6 @@ const resizer = () => {
   });
 };
 resizer();
-
-const flipCanvas = () => {
-  ctx.translate(canvas.width, 0);
-  ctx.scale(-1, 1);
-};
 
 const updateCanvas = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
