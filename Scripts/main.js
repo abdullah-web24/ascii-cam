@@ -172,14 +172,12 @@ class GridBox {
   draw(ctx) {
     ctx.beginPath();
     ctx.fillStyle = this.color;
-    ctx.strokeStyle = this.color;
 
     ctx.font = `500 ${gridObj.boxSize * 1.3}px "Roboto Mono"`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
     ctx.fillText(this.char, this.x + this.width / 2, this.y + this.height / 2);
-    ctx.stroke();
     ctx.closePath();
   }
 }
