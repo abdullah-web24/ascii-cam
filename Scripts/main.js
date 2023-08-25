@@ -7,6 +7,7 @@ const canvas = document.querySelector("#main-canvas"),
   scaleRange = document.querySelector("#scale-range"),
   colorRange = document.querySelector("#color-range"),
   modeBtn = document.querySelector("#mode-btn"),
+  torchBtn = document.querySelector("#torch-btn"),
   picCanvas = document.createElement("canvas");
 
 // Define Main Objects
@@ -34,6 +35,7 @@ const srcObj = {
     height: undefined,
     cameraMode: "user",
     src: undefined,
+    srcTrack: undefined,
   },
   charObj = {
     mainChars: " .:-=+*#%@",
@@ -70,10 +72,8 @@ charObj.adjBrightness(colorRange.value);
 
 const getCamera = async () => {
   try {
-    if (srcObj.src) {
-      srcObj.src.getTracks().forEach(function (track) {
-        track.stop();
-      });
+    if (srcObj.srcTrack) {
+      srcObj.srcTrack.stop();
     }
 
     srcObj.src = await navigator.mediaDevices.getUserMedia({
@@ -81,6 +81,14 @@ const getCamera = async () => {
         facingMode: srcObj.cameraMode,
       },
     });
+    srcObj.srcTrack = srcObj.src.getVideoTracks()[0];
+
+    // Has torch
+    if (srcObj.srcTrack.getCapabilities().torch) {
+      torchBtn.disabled = false;
+    } else {
+      torchBtn.disabled = true;
+    }
 
     srcObj.srcEl.srcObject = srcObj.src;
     srcObj.srcEl.play();
@@ -295,4 +303,22 @@ modeBtn.onclick = () => {
   srcObj.cameraMode = srcObj.cameraMode === "user" ? "environment" : "user";
 
   getCamera();
+};
+
+torchBtn.onclick = async () => {
+  try {
+    torchBtn.classList.toggle("active");
+
+    if (torchBtn.classList.contains("active")) {
+      await srcObj.srcTrack.applyConstraints({
+        advanced: [{ torch: true }],
+      });
+    } else {
+      await srcObj.srcTrack.applyConstraints({
+        advanced: [{ torch: false }],
+      });
+    }
+  } catch (err) {
+    console.log("Apply Constraints Err", err);
+  }
 };
