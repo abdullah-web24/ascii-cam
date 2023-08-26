@@ -53,27 +53,29 @@ body {
     z-index: 1;
 
     .message-cont {
-      border-radius: var(--radius);
-      outline: 2px solid var(--color-1);
-      outline-offset: -2px;
-      background-color: var(--color-2);
-      padding: 10px 16px;
       position: absolute;
       bottom: 100%;
-      right: var(--white-space);
+      right: 0;
       z-index: -1;
-      transform: translateX(100%);
-      opacity: 0;
-      transition: 0.15s ease-out;
-      will-change: transform, opacity;
+      overflow: hidden;
 
       p {
         width: 250px;
-      }
+        border-radius: var(--radius);
+        outline: 2px solid var(--color-1);
+        outline-offset: -2px;
+        background-color: var(--color-2);
+        padding: 10px 16px;
+        margin-right: var(--white-space);
+        transform: translateX(100%);
+        opacity: 0;
+        transition: 0.15s ease-out;
+        will-change: transform, opacity;
 
-      &.active {
-        transform: translateX(0);
-        opacity: 1;
+        &.active {
+          transform: translateX(0);
+          opacity: 1;
+        }
       }
     }
 

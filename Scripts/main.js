@@ -3,7 +3,6 @@ const canvas = document.querySelector("#main-canvas"),
   documentRoot = document.documentElement,
   header = document.querySelector("header"),
   tabBar = document.querySelector("div.tab-bar"),
-  messageCont = tabBar.querySelector("div.message-cont"),
   messageEl = tabBar.querySelector("#message-el"),
   invertBtn = document.querySelector("#invert-btn"),
   colorSelect = document.querySelector("#color-select"),
@@ -80,7 +79,7 @@ charObj.adjBrightness(colorRange.value);
 let messageTimeOut = undefined;
 const showMessage = (message) => {
   messageEl.textContent = message;
-  messageCont.classList.add("active");
+  messageEl.classList.add("active");
 
   if (messageTimeOut) {
     clearTimeout(messageTimeOut);
@@ -88,7 +87,7 @@ const showMessage = (message) => {
 
   messageTimeOut = setTimeout(() => {
     messageTimeOut = undefined;
-    messageCont.classList.remove("active");
+    messageEl.classList.remove("active");
   }, 2500);
 };
 
