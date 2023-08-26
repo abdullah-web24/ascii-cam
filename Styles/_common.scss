@@ -21,10 +21,6 @@ button {
   background: none;
   background-color: var(--color-2);
 
-  &.active,
-  &:hover {
-    outline: 2px solid;
-  }
   &:disabled {
     opacity: 0.5;
     cursor: default;
@@ -37,6 +33,15 @@ button {
   svg {
     height: 30px;
     width: 30px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button,
+  button {
+    &:hover {
+      outline: 2px solid;
+    }
   }
 }
 

@@ -44,11 +44,6 @@ body button {
   background: none;
   background-color: var(--color-2);
 }
-body .button.active, body .button:hover,
-body button.active,
-body button:hover {
-  outline: 2px solid;
-}
 body .button:disabled,
 body button:disabled {
   opacity: 0.5;
@@ -62,6 +57,12 @@ body .button svg,
 body button svg {
   height: 30px;
   width: 30px;
+}
+@media (hover: hover) and (pointer: fine) {
+  body .button:hover,
+  body button:hover {
+    outline: 2px solid;
+  }
 }
 body object {
   pointer-events: none;
@@ -163,6 +164,8 @@ body .tab-bar .main-btns .settings .settings-tab .settings-btns {
 }
 body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont {
   position: relative;
+  display: flex;
+  justify-content: center;
 }
 body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont .cont {
   background-color: var(--color-2);
@@ -186,10 +189,10 @@ body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont .con
 }
 body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont .cont.vertical .input input {
   width: 200px;
+  touch-action: none;
 }
 body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont .cont:not(.vertical) {
   padding: 16px;
-  left: -50%;
 }
 body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont.active button {
   outline: 2px solid var(--color-1);

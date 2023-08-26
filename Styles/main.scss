@@ -95,6 +95,8 @@ body {
 
             .slide-cont {
               position: relative;
+              display: flex;
+              justify-content: center;
 
               .cont {
                 background-color: var(--color-2);
@@ -118,13 +120,13 @@ body {
 
                     input {
                       width: 200px;
+                      touch-action: none;
                     }
                   }
                 }
 
                 &:not(.vertical) {
                   padding: 16px;
-                  left: -50%;
                 }
               }
 
