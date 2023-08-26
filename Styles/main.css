@@ -129,12 +129,35 @@ body #main-canvas {
 body .tab-bar {
   width: 100%;
   background-color: var(--color-2);
+  padding: 10px var(--white-space);
   display: flex;
   justify-content: space-between;
   position: absolute;
   bottom: 0;
   left: 0;
-  padding: 10px var(--white-space);
+  z-index: 1;
+}
+body .tab-bar .message-cont {
+  border-radius: var(--radius);
+  outline: 2px solid var(--color-1);
+  outline-offset: -2px;
+  background-color: var(--color-2);
+  padding: 10px 16px;
+  position: absolute;
+  bottom: 100%;
+  right: var(--white-space);
+  z-index: -1;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: 0.15s ease-out;
+  will-change: transform, opacity;
+}
+body .tab-bar .message-cont p {
+  width: 250px;
+}
+body .tab-bar .message-cont.active {
+  transform: translateX(0);
+  opacity: 1;
 }
 body .tab-bar .button,
 body .tab-bar button {
@@ -158,15 +181,17 @@ body .tab-bar .main-btns .settings .settings-tab {
   display: flex;
   justify-content: space-between;
   position: absolute;
-  top: 100%;
+  top: 0;
   left: 0;
   z-index: 1;
   padding: 10px var(--white-space);
   opacity: 0;
+  transform: translateY(100%);
   transition: 0.15s ease-out;
+  will-change: transform, opacity;
 }
 body .tab-bar .main-btns .settings .settings-tab.active {
-  top: 0;
+  transform: translateY(0);
   opacity: 1;
 }
 body .tab-bar .main-btns .settings .settings-tab .settings-btns {
@@ -187,6 +212,7 @@ body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont .con
   z-index: -1;
   opacity: 0;
   transition: 0.15s ease-out;
+  will-change: transform, opacity;
 }
 body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont .cont.vertical {
   width: 100%;

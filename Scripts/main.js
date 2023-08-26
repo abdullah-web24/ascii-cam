@@ -3,6 +3,8 @@ const canvas = document.querySelector("#main-canvas"),
   documentRoot = document.documentElement,
   header = document.querySelector("header"),
   tabBar = document.querySelector("div.tab-bar"),
+  messageCont = tabBar.querySelector("div.message-cont"),
+  messageEl = tabBar.querySelector("#message-el"),
   invertBtn = document.querySelector("#invert-btn"),
   colorSelect = document.querySelector("#color-select"),
   downloadBtn = document.querySelector("#download-btn"),
@@ -75,6 +77,21 @@ const srcObj = {
 charObj.init();
 charObj.adjBrightness(colorRange.value);
 
+let messageTimeOut = undefined;
+const showMessage = (message) => {
+  messageEl.textContent = message;
+  messageCont.classList.add("active");
+
+  if (messageTimeOut) {
+    clearTimeout(messageTimeOut);
+  }
+
+  messageTimeOut = setTimeout(() => {
+    messageTimeOut = undefined;
+    messageCont.classList.remove("active");
+  }, 2500);
+};
+
 const getCamera = async () => {
   try {
     if (srcObj.srcTrack) {
@@ -99,6 +116,7 @@ const getCamera = async () => {
     srcObj.srcEl.play();
   } catch (err) {
     console.log("Camera err", err);
+    showMessage("! Camera problem occurred.");
   }
 };
 getCamera();
@@ -106,8 +124,11 @@ getCamera();
 const copyTxt = async (txt) => {
   try {
     await navigator.clipboard.writeText(txt);
+
+    showMessage("> Coppied as text.");
   } catch (err) {
     console.log("Clipboard err", err);
+    showMessage("! Coppy problem occurred.");
   }
 };
 
@@ -292,6 +313,8 @@ downloadBtn.onclick = () => {
   );
   const imageLink = picCanvas.toDataURL("image/png", 1.0);
   downloadBtn.href = imageLink;
+
+  showMessage("> Image captured.");
 };
 
 coppyBtn.onclick = () => {
@@ -333,5 +356,7 @@ torchBtn.onclick = async () => {
     }
   } catch (err) {
     console.log("Apply Constraints Err", err);
+
+    showMessage("! Torch problem occurred.");
   }
 };
