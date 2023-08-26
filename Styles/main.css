@@ -145,7 +145,8 @@ body .tab-bar .message-cont {
   overflow: hidden;
 }
 body .tab-bar .message-cont p {
-  width: 250px;
+  width: -moz-max-content;
+  width: max-content;
   border-radius: var(--radius);
   outline: 2px solid var(--color-1);
   outline-offset: -2px;

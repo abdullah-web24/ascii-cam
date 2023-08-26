@@ -60,7 +60,7 @@ body {
       overflow: hidden;
 
       p {
-        width: 250px;
+        width: max-content;
         border-radius: var(--radius);
         outline: 2px solid var(--color-1);
         outline-offset: -2px;
