@@ -60,8 +60,8 @@ body button:disabled:hover {
 }
 body .button svg,
 body button svg {
-  height: 24px;
-  width: 24px;
+  height: 30px;
+  width: 30px;
 }
 body object {
   pointer-events: none;
@@ -206,6 +206,11 @@ body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont.acti
   }
   body {
     font-size: 14px;
+  }
+  body .button svg,
+  body button svg {
+    height: 24px;
+    width: 24px;
   }
   body header {
     padding: 10px var(--white-space);
