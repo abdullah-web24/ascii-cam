@@ -6,7 +6,7 @@ const canvas = document.querySelector("#main-canvas"),
   coppyBtn = document.querySelector("#coppy-btn"),
   scaleRange = document.querySelector("#scale-range"),
   colorRange = document.querySelector("#color-range"),
-  modeBtn = document.querySelector("#mode-btn"),
+  cameraModeBtn = document.querySelector("#camera-btn"),
   torchBtn = document.querySelector("#torch-btn"),
   picCanvas = document.createElement("canvas");
 
@@ -229,7 +229,7 @@ const updateCanvas = () => {
 
   ctx.beginPath();
   ctx.fillStyle = colorObj.background;
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(frame.x, frame.y, frame.width, frame.height);
   ctx.closePath();
 
   gridObj.boxes.forEach((box) => {
@@ -299,7 +299,7 @@ colorRange.oninput = () => {
   charObj.adjBrightness(colorRange.value);
 };
 
-modeBtn.onclick = () => {
+cameraModeBtn.onclick = () => {
   srcObj.cameraMode = srcObj.cameraMode === "user" ? "environment" : "user";
 
   getCamera();

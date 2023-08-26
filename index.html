@@ -9,45 +9,159 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600&display=swap"
       rel="stylesheet"
     />
 
     <link rel="stylesheet" href="./Styles/main.css" />
+    <script src="./Scripts/svg.js" defer></script>
     <script src="./Scripts/main.js" defer></script>
+    <script src="./Scripts/element.js" defer></script>
   </head>
 
   <body>
-    <canvas id="main-canvas"></canvas>
-    <div class="btn-cont">
-      <a href="" id="download-btn" download="image.png">Get Selfy</a>
-      <button id="coppy-btn">Get Coppy</button>
-      <button id="invert-btn">Invert</button>
-      <button id="mode-btn">Mode</button>
-      <button id="torch-btn">Torch</button>
-      <select name="color-select" id="color-select">
-        <option value="none" selected>None</option>
-        <option value="colorfull">Colorfull</option>
-        <option value="grayscale">Grayscale</option>
-      </select>
+    <header>
+      <p>ASCII CAM</p>
+      <p>BY <a href="#">DESLOP</a></p>
+    </header>
 
-      <span>Scale</span>
-      <input
-        value="60"
-        type="range"
-        name="scale-range"
-        id="scale-range"
-        min="20"
-        max="100"
-        step="10"
-      />
-      <input
-        value="2"
-        type="range"
-        name="color-range"
-        id="color-range"
-        step="1"
-      />
+    <canvas id="main-canvas"></canvas>
+
+    <div class="tab-bar">
+      <button id="torch-btn">
+        <object
+          class="svg"
+          data="./Sources/flash_on.svg"
+          type="image/svg+xml"
+          data-class="icon"
+        ></object>
+      </button>
+
+      <div class="main-btns">
+        <button id="coppy-btn">
+          <object
+            class="svg"
+            data="./Sources/copy.svg"
+            type="image/svg+xml"
+            data-class="icon"
+          ></object>
+        </button>
+
+        <a href="" id="download-btn" class="button" download="image.png">
+          <object
+            class="svg"
+            data="./Sources/add.svg"
+            type="image/svg+xml"
+            data-class="icon"
+          ></object
+        ></a>
+
+        <div class="settings">
+          <button id="settings-btn">
+            <object
+              class="svg"
+              data="./Sources/settings.svg"
+              type="image/svg+xml"
+              data-class="icon"
+            ></object>
+          </button>
+
+          <div class="settings-tab">
+            <button id="back-btn">
+              <object
+                class="svg"
+                data="./Sources/arrow_back.svg"
+                type="image/svg+xml"
+                data-class="icon"
+              ></object>
+            </button>
+
+            <div class="settings-btns">
+              <button id="invert-btn">
+                <object
+                  class="svg"
+                  data="./Sources/invert.svg"
+                  type="image/svg+xml"
+                  data-class="icon"
+                ></object>
+              </button>
+
+              <div class="slide-cont">
+                <button id="color-btn">
+                  <object
+                    class="svg"
+                    data="./Sources/color.svg"
+                    type="image/svg+xml"
+                    data-class="icon"
+                  ></object>
+                </button>
+                <div class="cont">
+                  <select name="color-select" id="color-select">
+                    <option value="none" selected>None</option>
+                    <option value="colorfull">Colorfull</option>
+                    <option value="grayscale">Grayscale</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="slide-cont">
+                <button class="exposure-btn">
+                  <object
+                    class="svg"
+                    data="./Sources/exposure.svg"
+                    type="image/svg+xml"
+                    data-class="icon"
+                  ></object>
+                </button>
+                <div class="cont vertical">
+                  <div class="input">
+                    <input
+                      value="2"
+                      type="range"
+                      name="color-range"
+                      id="color-range"
+                      step="1"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="slide-cont">
+                <button id="scale-btn">
+                  <object
+                    class="svg"
+                    data="./Sources/Grid.svg"
+                    type="image/svg+xml"
+                    data-class="icon"
+                  ></object>
+                </button>
+                <div class="cont vertical">
+                  <div class="input">
+                    <input
+                      value="60"
+                      type="range"
+                      name="scale-range"
+                      id="scale-range"
+                      min="20"
+                      max="100"
+                      step="10"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button id="camera-btn">
+        <object
+          class="svg"
+          data="./Sources/flip_camera.svg"
+          type="image/svg+xml"
+          data-class="icon"
+        ></object>
+      </button>
     </div>
   </body>
 </html>

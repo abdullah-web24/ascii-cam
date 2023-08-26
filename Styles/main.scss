@@ -4,22 +4,180 @@
   box-sizing: border-box;
 }
 
+:root {
+  --white-space: 24px;
+  --color-1: rgb(253, 253, 253);
+  --color-2: rgb(15, 15, 15);
+  --btnHeight: 56px;
+  --radius: 8px;
+}
+
 body {
   height: 100vh;
   width: 100%;
-  background-color: rgb(15, 15, 15);
+  background-color: var(--color-2);
   overflow: hidden;
+  font-family: "Roboto Mono";
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-1);
+
+  @import "./common";
+
+  header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 14px var(--white-space);
+    background-color: var(--color-2);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
 
   #main-canvas {
     height: 100%;
     width: 100%;
   }
 
-  .btn-cont {
+  .tab-bar {
     width: 100%;
-    display: block;
+    background-color: var(--color-2);
+    display: flex;
+    justify-content: space-between;
     position: absolute;
     bottom: 0;
     left: 0;
+    padding: 10px var(--white-space);
+
+    .button,
+    button {
+      flex-shrink: 0;
+    }
+
+    .main-btns {
+      display: flex;
+      gap: var(--white-space);
+
+      #download-btn {
+        border-radius: 50%;
+        background-color: var(--color-1);
+        outline-color: var(--color-2);
+
+        path {
+          fill: var(--color-2);
+        }
+      }
+
+      .settings {
+        .settings-tab {
+          width: 100%;
+          background-color: var(--color-2);
+          display: flex;
+          justify-content: space-between;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          z-index: 1;
+          padding: 10px var(--white-space);
+          opacity: 0;
+          transition: 0.15s ease-out;
+
+          &.active {
+            top: 0;
+            opacity: 1;
+          }
+
+          .settings-btns {
+            display: flex;
+            gap: var(--white-space);
+
+            .slide-cont {
+              position: relative;
+
+              .cont {
+                background-color: var(--color-2);
+                border-radius: var(--radius) var(--radius) 0 0;
+                position: absolute;
+                bottom: 100%;
+                transform: translateY(100%);
+                z-index: -1;
+                opacity: 0;
+                transition: 0.15s ease-out;
+
+                &.vertical {
+                  height: 232px;
+                  width: 100%;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+
+                  .input {
+                    transform: rotate(-90deg);
+
+                    input {
+                      width: 200px;
+                    }
+                  }
+                }
+
+                &:not(.vertical) {
+                  padding: 16px;
+                  left: -50%;
+                }
+              }
+
+              &.active {
+                button {
+                  outline: 2px solid var(--color-1);
+                }
+
+                .cont {
+                  transform: translateY(0);
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  :root {
+    --white-space: 16px;
+    --btnHeight: 48px;
+  }
+
+  body {
+    font-size: 14px;
+
+    header {
+      padding: 10px var(--white-space);
+    }
+    .tab-bar {
+      padding: 6px var(--white-space);
+
+      .main-btns .settings .settings-tab {
+        padding: 6px var(--white-space);
+
+        .settings-btns .slide-cont .cont.vertical {
+          height: 190px;
+
+          .input input {
+            width: 170px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 350px) {
+  :root {
+    --white-space: 10px;
   }
 }

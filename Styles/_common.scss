@@ -1,0 +1,78 @@
+a,
+button,
+select {
+  color: var(--color-1);
+  font-size: inherit;
+  cursor: pointer;
+}
+
+.button,
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--btnHeight);
+  width: var(--btnHeight);
+  outline: none;
+  outline-offset: -2px;
+  outline-color: var(--color-1);
+  border: none;
+  border-radius: var(--radius);
+  background: none;
+  background-color: var(--color-2);
+
+  &.active,
+  &:hover {
+    outline: 2px solid;
+  }
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+
+    &:hover {
+      outline: none;
+    }
+  }
+
+  svg {
+    height: 24px;
+    width: 24px;
+  }
+}
+
+object {
+  pointer-events: none;
+}
+.icon path {
+  fill: var(--color-1);
+}
+
+select {
+  background-color: var(--color-2);
+  font-family: inherit;
+  text-transform: uppercase;
+  padding: 0.3em;
+  border-radius: var(--radius);
+  border: none;
+  outline: 2px solid var(--color-1);
+  outline-offset: -2px;
+}
+
+input[type="range"] {
+  appearance: none;
+  background-color: var(--color-2);
+  border: 2px solid var(--color-1);
+  border-radius: 1em;
+  height: calc(1em + 2px);
+  overflow: hidden;
+  cursor: pointer;
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    height: 1em;
+    width: 1em;
+    border-radius: 50%;
+    background-color: var(--color-1);
+    box-shadow: calc(-200px - 1em / 2) 0 0 200px var(--color-1);
+  }
+}
