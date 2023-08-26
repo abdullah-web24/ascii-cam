@@ -89,7 +89,7 @@ const getCamera = async () => {
     srcObj.srcTrack = srcObj.src.getVideoTracks()[0];
 
     // Has torch
-    if (srcObj.srcTrack.getCapabilities().torch) {
+    if (srcObj.srcTrack.getCapabilities?.().torch) {
       torchBtn.disabled = false;
     } else {
       torchBtn.disabled = true;

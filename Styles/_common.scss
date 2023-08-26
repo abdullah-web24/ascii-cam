@@ -4,6 +4,7 @@ select {
   color: var(--color-1);
   font-size: inherit;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .button,
@@ -65,14 +66,24 @@ select {
 
 input[type="range"] {
   appearance: none;
-  background-color: var(--color-2);
-  border: 2px solid var(--color-1);
+  height: 1em;
   border-radius: 1em;
-  height: calc(1em + 2px);
-  overflow: hidden;
+  outline: 2px solid var(--color-1);
+  outline-offset: -2px;
+  background-color: var(--color-2);
   cursor: pointer;
+  overflow: hidden;
 
   &::-webkit-slider-thumb {
+    appearance: none;
+    height: 1em;
+    width: 1em;
+    border-radius: 50%;
+    background-color: var(--color-1);
+    box-shadow: calc(-200px - 1em / 2) 0 0 200px var(--color-1);
+  }
+
+  &::-moz-range-thumb {
     appearance: none;
     height: 1em;
     width: 1em;

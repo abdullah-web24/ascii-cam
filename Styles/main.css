@@ -28,6 +28,7 @@ body select {
   color: var(--color-1);
   font-size: inherit;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 body .button,
 body button {
@@ -84,16 +85,26 @@ body input[type=range] {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  background-color: var(--color-2);
-  border: 2px solid var(--color-1);
+  height: 1em;
   border-radius: 1em;
-  height: calc(1em + 2px);
-  overflow: hidden;
+  outline: 2px solid var(--color-1);
+  outline-offset: -2px;
+  background-color: var(--color-2);
   cursor: pointer;
+  overflow: hidden;
 }
 body input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
           appearance: none;
+  height: 1em;
+  width: 1em;
+  border-radius: 50%;
+  background-color: var(--color-1);
+  box-shadow: calc(-200px - 0.5em) 0 0 200px var(--color-1);
+}
+body input[type=range]::-moz-range-thumb {
+  -moz-appearance: none;
+       appearance: none;
   height: 1em;
   width: 1em;
   border-radius: 50%;
@@ -178,18 +189,16 @@ body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont .con
   transition: 0.15s ease-out;
 }
 body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont .cont.vertical {
-  height: 232px;
   width: 100%;
+  height: 232px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont .cont.vertical .input {
-  transform: rotate(-90deg);
-}
-body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont .cont.vertical .input input {
+body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont .cont.vertical input {
+  flex-shrink: 0;
   width: 200px;
-  touch-action: none;
+  transform: rotate(270deg);
 }
 body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont .cont:not(.vertical) {
   padding: 16px;
@@ -227,7 +236,7 @@ body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont.acti
   body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont .cont.vertical {
     height: 190px;
   }
-  body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont .cont.vertical .input input {
+  body .tab-bar .main-btns .settings .settings-tab .settings-btns .slide-cont .cont.vertical input {
     width: 170px;
   }
 }
