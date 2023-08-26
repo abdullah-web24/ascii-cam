@@ -1,5 +1,8 @@
 // Define Elements
 const canvas = document.querySelector("#main-canvas"),
+  documentRoot = document.documentElement,
+  header = document.querySelector("header"),
+  tabBar = document.querySelector("div.tab-bar"),
   invertBtn = document.querySelector("#invert-btn"),
   colorSelect = document.querySelector("#color-select"),
   downloadBtn = document.querySelector("#download-btn"),
@@ -19,6 +22,8 @@ const ctx = canvas.getContext("2d", { willReadFrequently: true }),
     width: undefined,
     height: undefined,
     ratio: undefined,
+    extraWidth: undefined,
+    extraHeight: undefined,
   },
   gridObj = {
     maxBoxNum: scaleRange.value * 1,
@@ -115,9 +120,17 @@ const initFrame = () => {
   srcObj.height = srcObj.srcEl.videoHeight;
   srcObj.width = srcObj.srcEl.videoWidth;
 
+  frame.extraWidth = getComputedStyle(documentRoot)
+    .getPropertyValue("--white-space")
+    .slice(0, -2);
+
+  frame.extraHeight =
+    header.getBoundingClientRect().height +
+    tabBar.getBoundingClientRect().height;
+
   frame.ratio = Math.min(
-    canvas.width / srcObj.width,
-    canvas.height / srcObj.height
+    (canvas.width - frame.extraWidth * 2) / srcObj.width,
+    (canvas.height - frame.extraHeight * 2) / srcObj.height
   );
   frame.width = srcObj.width * frame.ratio;
   frame.height = srcObj.height * frame.ratio;
