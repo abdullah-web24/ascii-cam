@@ -18,6 +18,11 @@ slideEls.forEach((el) => {
 settingsBtn.onclick = () => {
   settingsTab.classList.add("active");
 };
+
 backBtn.onclick = () => {
+  slideEls.forEach((el) => {
+    el.classList.remove("active");
+  });
+
   settingsTab.classList.remove("active");
 };
