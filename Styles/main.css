@@ -49,6 +49,10 @@ body button {
   background: none;
   background-color: var(--color-2);
 }
+body .button.active,
+body button.active {
+  outline: 2px solid;
+}
 body .button:disabled,
 body button:disabled {
   opacity: 0.5;

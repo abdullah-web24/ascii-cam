@@ -22,6 +22,9 @@ button {
   background: none;
   background-color: var(--color-2);
 
+  &.active {
+    outline: 2px solid;
+  }
   &:disabled {
     opacity: 0.5;
     cursor: default;
