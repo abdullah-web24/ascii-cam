@@ -140,6 +140,10 @@ const initFrame = () => {
   srcObj.height = srcObj.srcEl.videoHeight;
   srcObj.width = srcObj.srcEl.videoWidth;
 
+  ctx.font = `500 ${gridObj.boxSize * 1.3}px "Roboto Mono"`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
   frame.extraWidth = getComputedStyle(documentRoot)
     .getPropertyValue("--white-space")
     .slice(0, -2);
@@ -213,10 +217,6 @@ class GridBox {
   draw(ctx) {
     ctx.beginPath();
     ctx.fillStyle = this.color;
-
-    ctx.font = `500 ${gridObj.boxSize * 1.3}px "Roboto Mono"`;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
 
     ctx.fillText(this.char, this.x + this.width / 2, this.y + this.height / 2);
     ctx.closePath();
