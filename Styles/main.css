@@ -12,11 +12,15 @@
   --radius: 8px;
 }
 
+html,
+body {
+  overflow: hidden;
+}
+
 body {
   height: 100svh;
   width: 100%;
   background-color: var(--color-2);
-  overflow: hidden;
   font-family: "Roboto Mono";
   font-size: 1rem;
   font-weight: 400;
