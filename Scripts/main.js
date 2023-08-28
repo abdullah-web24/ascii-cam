@@ -140,10 +140,6 @@ const initFrame = () => {
   srcObj.height = srcObj.srcEl.videoHeight;
   srcObj.width = srcObj.srcEl.videoWidth;
 
-  ctx.font = `500 ${gridObj.boxSize * 1.3}px "Roboto Mono"`;
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-
   frame.extraWidth = getComputedStyle(documentRoot)
     .getPropertyValue("--white-space")
     .slice(0, -2);
@@ -231,6 +227,10 @@ const initGridBoxes = () => {
       gridObj.boxes.push(new GridBox(i, j));
     }
   }
+
+  ctx.font = `500 ${gridObj.boxSize * 1.3}px "Roboto Mono"`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
 };
 
 const resizer = () => {
