@@ -171,6 +171,10 @@ const initGridObj = () => {
     (frame.height - gridObj.rows * gridObj.boxSize) / gridObj.rows;
   gridObj.extraWidth =
     (frame.width - gridObj.cols * gridObj.boxSize) / gridObj.cols;
+
+  ctx.font = `500 ${gridObj.boxSize * 1.3}px "Roboto Mono"`;
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
 };
 
 const initGridBoxPos = (thebox) => {
@@ -227,10 +231,6 @@ const initGridBoxes = () => {
       gridObj.boxes.push(new GridBox(i, j));
     }
   }
-
-  ctx.font = `500 ${gridObj.boxSize * 1.3}px "Roboto Mono"`;
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
 };
 
 const resizer = () => {
