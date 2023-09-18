@@ -298,22 +298,24 @@ scaleRange.oninput = () => {
 
 onresize = resizer;
 
-downloadBtn.onclick = () => {
-  picCtx.drawImage(
-    canvas,
-    frame.x,
-    frame.y,
-    frame.width,
-    frame.height,
-    0,
-    0,
-    frame.width,
-    frame.height
-  );
-  const imageLink = picCanvas.toDataURL("image/png", 1.0);
-  downloadBtn.href = imageLink;
+downloadBtn.onclick = (e) => {
+  // picCtx.drawImage(
+  //   canvas,
+  //   frame.x,
+  //   frame.y,
+  //   frame.width,
+  //   frame.height,
+  //   0,
+  //   0,
+  //   frame.width,
+  //   frame.height
+  // );
+  // const imageLink = picCanvas.toDataURL("image/png", 1.0);
+  // downloadBtn.href = imageLink;
 
-  showMessage("> Image captured.");
+  // showMessage("> Image captured.");
+  e.preventDefault();
+  showMessage("> Capture is unavailable.");
 };
 
 coppyBtn.onclick = () => {
